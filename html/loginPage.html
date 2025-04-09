@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>登录测试页面</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>登录测试</h1>
+    <form id="loginForm">
+        <label for="username">用户名:</label>
+        <input type="text" id="username" name="username">
+        <br>
+
+        <label for="password">密码:</label>
+        <input type="password" id="password" name="password">
+        <br>
+
+        <input type="button" value="登录" onclick="validate()">
+        <p id="message"></p>
+    </form>
+
+    <script>
+        // 简单的用户名和密码验证
+        function validate() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const messageElement = document.getElementById('message');
+
+            // 首先进行空值检查
+            if (username === '' && password === '') {
+                messageElement.textContent = '用户名和密码不能为空';
+                messageElement.style.color = 'red';
+                return;
+            } else if (username === '') {
+                messageElement.textContent = '用户名不能为空';
+                messageElement.style.color = 'red';
+                return;
+            } else if (password === '') {
+                messageElement.textContent = '密码不能为空';
+                messageElement.style.color = 'red';
+                return;
+            }
+
+            // 检查用户名和密码的格式和长度
+            const usernamePattern = /^[a-zA-Z0-9_]{3,20}$/; // 仅允许字母、数字和下划线，长度为3-20
+            const passwordPattern = /^[a-zA-Z0-9!@#$%^&*()_+]{8,20}$/; // 仅允许字母、数字和特殊字符，长度为8-30
+
+            if (!usernamePattern.test(username)) {
+                messageElement.textContent = '用户名仅允许字母、数字和下划线，长度为3-20';
+                messageElement.style.color = 'red';
+                return;
+            }
+
+            if (!passwordPattern.test(password)) {
+                messageElement.textContent = '密码仅允许字母、数字和特殊字符，长度为8-20';
+                messageElement.style.color = 'red';
+                return;
+            }
+
+            // 以下为原有的用户名和密码检查逻辑
+            const testUsername = 'test';
+            const testPassword = 'abcd1234';
+
+            if (username === testUsername && password === testPassword) {
+                messageElement.textContent = '登录成功';
+                messageElement.style.color = 'green';
+            } else if (username !== testUsername && password === testPassword) {
+                messageElement.textContent = '用户名不存在';
+                messageElement.style.color = 'red';
+            } else if (username === testUsername && password !== testPassword) {
+                messageElement.textContent = '密码错误';
+                messageElement.style.color = 'red';
+            } else {
+                messageElement.textContent = '用户名或密码不正确';
+                messageElement.style.color = 'red';
+            }
+        }
+    </script>
+</body>
+</html>
